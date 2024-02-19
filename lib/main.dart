@@ -34,15 +34,53 @@ class MyHomePage extends StatelessWidget {
       width:  double.infinity,
       height: double.infinity,
       color: Colors.indigo,
-      child: const Column(
+      child:  Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children:[
-            Expanded(
+            const Expanded(
               flex: 2,
               child: Header()),
             Expanded(
               flex: 4,
-              child: SuperBoton())
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SuperBoton(
+                       coloruno:Colors.pink,
+                       colordos:Colors.grey,
+                       funcion: (){print("Click");},
+                       icono: FontAwesomeIcons.carBurst,
+                       titulo: "Tecpro Bahia",
+                    ),
+                    SuperBoton(coloruno: Colors.orange,
+                     colordos: Colors.grey, titulo: "Las Obreras",
+                      icono: Icons.ac_unit_sharp,
+                       funcion: (){print("Las Obreras");}),
+                       SuperBoton(coloruno: Colors.yellow,
+                        colordos: Colors.grey,
+                         titulo: "Gusatvo Luna",
+                          icono: FontAwesomeIcons.moon,
+                           funcion: (){print("Luna");}),
+                           SuperBoton(
+                       coloruno:Colors.blue,
+                       colordos:Colors.grey,
+                       funcion: (){print("Click");},
+                       icono: FontAwesomeIcons.carBurst,
+                       titulo: "Tecpro Bahia",
+                    ),
+                    SuperBoton(coloruno: Colors.black,
+                     colordos: Colors.grey, titulo: "Las Obreras",
+                      icono: Icons.ac_unit_sharp,
+                       funcion: (){print("Las Obreras");}),
+                       SuperBoton(
+                        coloruno: Colors.yellow,
+                        
+                         titulo: "Gusatvo Luna",
+                          icono: FontAwesomeIcons.moon,
+                           funcion: (){print("Luna");})
+                  ],
+                ),
+              ))
             
             
         ]
@@ -53,51 +91,69 @@ class MyHomePage extends StatelessWidget {
 
 
 class SuperBoton extends StatelessWidget {
-  const SuperBoton({super.key});
+  final Color coloruno ;
+  final Color colordos ;
+  final String titulo; 
+  final IconData icono;
+  VoidCallback funcion;
+  
+   SuperBoton({       
+    this.coloruno = Colors.grey,
+    this.colordos = Colors.pink,
+    required this.titulo, 
+    required this.icono,
+    required this.funcion
+
+    });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: const EdgeInsets.all(20),
-        width: double.infinity,
-        height: MediaQuery.of(context).size.width*.3,
-        decoration: const BoxDecoration(
-        borderRadius:BorderRadius.all(Radius.circular(20))  ,   
-        gradient: LinearGradient(
-          colors: [Colors.pink,Colors.grey]
-        )
-        ),
-     child: Container(
-       decoration: const BoxDecoration(
-        borderRadius:BorderRadius.all(Radius.circular(20))  ,   
-        color: Colors.red,
-        ),
-        child: const Stack(
-          children:[
-              Positioned(
-                bottom: -10,
-                right: -10,
-                child: Opacity(
-                  opacity: 0.2,
-                  child: FaIcon(FontAwesomeIcons.carBurst,size: 80,color: Colors.white,),
+    return GestureDetector(
+      onTap: funcion,
+      child: Center(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+          width: double.infinity,
+          height: MediaQuery.of(context).size.width*.3,
+          decoration:  BoxDecoration(
+          borderRadius:const BorderRadius.all(Radius.circular(20))  ,   
+          gradient: LinearGradient(
+            colors: [coloruno,colordos]
+          )
+          ),
+       child: Container(
+         decoration: const BoxDecoration(
+          borderRadius:BorderRadius.all(Radius.circular(20))  ,   
+         // color: Colors.red,
+          ),
+          child:  Stack(
+            children:[
+                Positioned(
+                  bottom: -12,
+                  right: -7,
+                  child: Opacity(
+                    opacity: 0.2,
+                    child: ClipRRect(
+                      borderRadius:const BorderRadius.only(bottomRight: Radius.circular(58)),
+                      child: FaIcon(icono,size: 80,color: Colors.white,)),
+                  ),
                 ),
-              ),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    FaIcon(FontAwesomeIcons.carBurst,color: Colors.white,),
-                    Text("Accidente de terceros",style: TextStyle(fontSize: 18,color: Colors.white),),
-                    FaIcon(FontAwesomeIcons.arrowRight,color: Colors.white,),
-                  ],
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      FaIcon(icono,color: Colors.white,size: 50,),
+                      Text(titulo,style: const TextStyle(fontSize: 18,color: Colors.white),),
+                      const FaIcon(FontAwesomeIcons.arrowRight,color: Colors.white,),
+                    ],
+                  ),
                 ),
-              ),
-              
-              
-          ]
+                
+                
+            ]
+          ),
+       ),
         ),
-     ),
       ),
     );
   }
