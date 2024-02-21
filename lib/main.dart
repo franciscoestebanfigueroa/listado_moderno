@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:listado_moderno/header_paint.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,15 +20,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Scaffold(
-        
-        //body: MenuModerno()
-        body:MisSliver()
-        
-        ),
+
+          //body: MenuModerno()
+          body: MisSliver()),
     );
   }
 }
-
 
 //sliver personalizados
 //primero hay que poner customScrolView y dentro de el van los sliver
@@ -40,67 +38,107 @@ class MisSliver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   CustomScrollView(
+    return CustomScrollView(
       slivers: [
-         // const SliverAppBar(
-         //   floating: true,//aparece el menu cuando empezamos a bajer la lista
-         //   backgroundColor: Colors.amber,
-         //   title: Text("Un Menu FEo pero facil"),
-         //   centerTitle: true,
-         // ),
-         SliverPersistentHeader(
-          delegate: VamoHacerUnaClase()
+        // const SliverAppBar(
+        //   floating: true,//aparece el menu cuando empezamos a bajer la lista
+        //   backgroundColor: Colors.amber,
+        //   title: Text("Un Menu FEo pero facil"),
+        //   centerTitle: true,
+        // ),
+        SliverPersistentHeader(
+            floating: true,
+            delegate: VamosHacerUnaClase(
+                maximo: 150,
+                minimo: 100,
+                child: HeaderPaintCustom(
+                  child: Header(),
+                ))),
 
-          ),
-
-          SliverList(
-
-            delegate: SliverChildListDelegate(
-
-              List.generate(20, (index) => Container(
-                margin: EdgeInsets.all(15),
-                width: 200,
-                height: 100,
-                color: Colors.red,
-                ))
-            ),
-            )
-
+        SliverList(
+          delegate: SliverChildListDelegate([
+            SuperBoton(
+                titulo: "Control de Peso",
+                icono: Icons.enhance_photo_translate_rounded,
+                funcion: () {}),
+            SuperBoton(
+                coloruno: Colors.yellow,
+                colordos: Colors.grey,
+                titulo: "Sugerencias",
+                icono: Icons.accessibility_new_sharp,
+                funcion: () {}),
+            SuperBoton(
+                coloruno: Colors.black,
+                colordos: Colors.grey,
+                titulo: "Dieta",
+                icono: Icons.accessibility_new_sharp,
+                funcion: () {}),
+            SuperBoton(
+                coloruno: Colors.orange,
+                colordos: Colors.grey,
+                titulo: "Alimentacion",
+                icono: Icons.accessibility_new_sharp,
+                funcion: () {}),
+            SuperBoton(
+                coloruno: Colors.red,
+                colordos: Colors.grey,
+                titulo: "Contactenos",
+                icono: Icons.call,
+                funcion: () {}),
+            SuperBoton(
+                coloruno: Colors.green,
+                colordos: Colors.grey,
+                titulo: "Dieta",
+                icono: Icons.accessibility_new_sharp,
+                funcion: () {}),
+            SuperBoton(
+                coloruno: Colors.indigo,
+                colordos: Colors.grey,
+                titulo: "Dieta",
+                icono: Icons.accessibility_new_sharp,
+                funcion: () {}),
+          ]),
+        )
       ],
     );
   }
 }
 
+class VamosHacerUnaClase extends SliverPersistentHeaderDelegate {
+  double minimo;
+  double maximo;
+  Widget child;
 
-class VamoHacerUnaClase extends SliverPersistentHeaderDelegate {
+  VamosHacerUnaClase({
+    this.minimo = 100,
+    this.maximo = 200,
+    required this.child,
+  });
+
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      width: 200,
-      height: 200,
-      color: Colors.red,
+      child: child,
     );
-    // TODO: implement build
-    throw UnimplementedError();
+    //|| throw UnimplementedError();
   }
 
-  @override  
-  double get maxExtent => throw UnimplementedError();
+  @override
+  double get maxExtent => maximo; //throw UnimplementedError();
 
   @override
   // TODO: implement minExtent
-  double get minExtent => throw UnimplementedError();
+  double get minExtent => minimo; //throw UnimplementedError();
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    // TODO: implement shouldRebuild
-    throw UnimplementedError();
+  //cambiar el nombre de la clase para que aparezca las variables
+  bool shouldRebuild(covariant VamosHacerUnaClase oldDelegate) {
+    return maximo != oldDelegate.maximo ||
+        minimo != oldDelegate.minimo ||
+        child != oldDelegate.child;
   }
-  
 }
-
-
-
 
 //-------------------------------------------------
 class MenuModerno extends StatelessWidget {
@@ -109,80 +147,86 @@ class MenuModerno extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width:  double.infinity,
+      width: double.infinity,
       height: double.infinity,
       color: Colors.indigo,
-      child:  Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:[
-            const Expanded(
-              flex: 2,
-              child: Header()),
-            Expanded(
-              flex: 4,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SuperBoton(
-                       coloruno:Colors.pink,
-                       colordos:Colors.grey,
-                       funcion: (){print("Click");},
-                       icono: FontAwesomeIcons.carBurst,
-                       titulo: "Tecpro Bahia",
-                    ),
-                    SuperBoton(coloruno: Colors.orange,
-                     colordos: Colors.grey, titulo: "Las Obreras",
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        const Expanded(flex: 2, child: Header()),
+        Expanded(
+            flex: 4,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SuperBoton(
+                    coloruno: Colors.pink,
+                    colordos: Colors.grey,
+                    funcion: () {
+                      print("Click");
+                    },
+                    icono: FontAwesomeIcons.carBurst,
+                    titulo: "Tecpro Bahia",
+                  ),
+                  SuperBoton(
+                      coloruno: Colors.orange,
+                      colordos: Colors.grey,
+                      titulo: "Las Obreras",
                       icono: Icons.ac_unit_sharp,
-                       funcion: (){print("Las Obreras");}),
-                       SuperBoton(coloruno: Colors.yellow,
-                        colordos: Colors.grey,
-                         titulo: "Gusatvo Luna",
-                          icono: FontAwesomeIcons.moon,
-                           funcion: (){print("Luna");}),
-                           SuperBoton(
-                       coloruno:Colors.blue,
-                       colordos:Colors.grey,
-                       funcion: (){print("Click");},
-                       icono: FontAwesomeIcons.carBurst,
-                       titulo: "Tecpro Bahia",
-                    ),
-                    SuperBoton(coloruno: Colors.black,
-                     colordos: Colors.grey, titulo: "Las Obreras",
+                      funcion: () {
+                        print("Las Obreras");
+                      }),
+                  SuperBoton(
+                      coloruno: Colors.yellow,
+                      colordos: Colors.grey,
+                      titulo: "Gusatvo Luna",
+                      icono: FontAwesomeIcons.moon,
+                      funcion: () {
+                        print("Luna");
+                      }),
+                  SuperBoton(
+                    coloruno: Colors.blue,
+                    colordos: Colors.grey,
+                    funcion: () {
+                      print("Click");
+                    },
+                    icono: FontAwesomeIcons.carBurst,
+                    titulo: "Tecpro Bahia",
+                  ),
+                  SuperBoton(
+                      coloruno: Colors.black,
+                      colordos: Colors.grey,
+                      titulo: "Las Obreras",
                       icono: Icons.ac_unit_sharp,
-                       funcion: (){print("Las Obreras");}),
-                       SuperBoton(
-                        coloruno: Colors.yellow,
-                        
-                         titulo: "Gusatvo Luna",
-                          icono: FontAwesomeIcons.moon,
-                           funcion: (){print("Luna");})
-                  ],
-                ),
-              ))
-            
-            
-        ]
-      ),
+                      funcion: () {
+                        print("Las Obreras");
+                      }),
+                  SuperBoton(
+                      coloruno: Colors.yellow,
+                      titulo: "Gusatvo Luna",
+                      icono: FontAwesomeIcons.moon,
+                      funcion: () {
+                        print("Luna");
+                      })
+                ],
+              ),
+            ))
+      ]),
     );
   }
 }
 
-
 class SuperBoton extends StatelessWidget {
-  final Color coloruno ;
-  final Color colordos ;
-  final String titulo; 
+  final Color coloruno;
+  final Color colordos;
+  final String titulo;
   final IconData icono;
   VoidCallback funcion;
-  
-   SuperBoton({       
-    this.coloruno = Colors.grey,
-    this.colordos = Colors.pink,
-    required this.titulo, 
-    required this.icono,
-    required this.funcion
 
-    });
+  SuperBoton(
+      {this.coloruno = Colors.pink,
+      this.colordos = Colors.grey,
+      required this.titulo,
+      required this.icono,
+      required this.funcion});
 
   @override
   Widget build(BuildContext context) {
@@ -190,53 +234,60 @@ class SuperBoton extends StatelessWidget {
       onTap: funcion,
       child: Center(
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           width: double.infinity,
-          height: MediaQuery.of(context).size.width*.3,
-          decoration:  BoxDecoration(
-          borderRadius:const BorderRadius.all(Radius.circular(20))  ,   
-          gradient: LinearGradient(
-            colors: [coloruno,colordos]
-          )
-          ),
-       child: Container(
-         decoration: const BoxDecoration(
-          borderRadius:BorderRadius.all(Radius.circular(20))  ,   
-         // color: Colors.red,
-          ),
-          child:  Stack(
-            children:[
-                Positioned(
-                  bottom: -12,
-                  right: -7,
-                  child: Opacity(
-                    opacity: 0.2,
-                    child: ClipRRect(
-                      borderRadius:const BorderRadius.only(bottomRight: Radius.circular(58)),
-                      child: FaIcon(icono,size: 80,color: Colors.white,)),
-                  ),
+          height: MediaQuery.of(context).size.width * .3,
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              gradient: LinearGradient(colors: [coloruno, colordos])),
+          child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              // color: Colors.red,
+            ),
+            child: Stack(children: [
+              Positioned(
+                bottom: -12,
+                right: -7,
+                child: Opacity(
+                  opacity: 0.2,
+                  child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(58)),
+                      child: FaIcon(
+                        icono,
+                        size: 80,
+                        color: Colors.white,
+                      )),
                 ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FaIcon(icono,color: Colors.white,size: 50,),
-                      Text(titulo,style: const TextStyle(fontSize: 18,color: Colors.white),),
-                      const FaIcon(FontAwesomeIcons.arrowRight,color: Colors.white,),
-                    ],
-                  ),
+              ),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FaIcon(
+                      icono,
+                      color: Colors.white,
+                      size: 50,
+                    ),
+                    Text(
+                      titulo,
+                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    const FaIcon(
+                      FontAwesomeIcons.arrowRight,
+                      color: Colors.white,
+                    ),
+                  ],
                 ),
-                
-                
-            ]
+              ),
+            ]),
           ),
-       ),
         ),
       ),
     );
   }
 }
-
 
 class Header extends StatelessWidget {
   const Header({super.key});
@@ -244,14 +295,10 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Stack(
-      children: [
-        FondoHeader(),
-        FrenteHeader()
-      ],
+      children: [FondoHeader(), FrenteHeader()],
     );
   }
 }
-
 
 class FrenteHeader extends StatelessWidget {
   const FrenteHeader({super.key});
@@ -261,30 +308,43 @@ class FrenteHeader extends StatelessWidget {
     return const Stack(
       children: [
         Positioned(
-          top: -45,
-          left: -35,
-          child: Opacity(
-            opacity: 0.2,
-            child: FaIcon(FontAwesomeIcons.add,
-            size: 200,
-            color: Colors.white,
-            shadows: <Shadow>[Shadow(
-              color: Colors.white ,
-              offset:Offset(-10.0,-10.0),
-              blurRadius: 20
-              )],),
-          )),
+            top: -45,
+            left: -35,
+            child: Opacity(
+              opacity: 0.2,
+              child: FaIcon(
+                FontAwesomeIcons.add,
+                size: 200,
+                color: Colors.white,
+                shadows: <Shadow>[
+                  Shadow(
+                      color: Colors.white,
+                      offset: Offset(-10.0, -10.0),
+                      blurRadius: 20)
+                ],
+              ),
+            )),
         Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text("Has Solicitado Asistecia",style: TextStyle(fontSize: 20),),
-              Text("Medica",style: TextStyle(fontSize: 30),),
-              Opacity(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              "Has Solicitado Asistecia",
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(
+              "Medica",
+              style: TextStyle(fontSize: 30),
+            ),
+            Opacity(
                 opacity: 0.5,
-                child: FaIcon(FontAwesomeIcons.add,size: 60,color: Colors.white,)),
-            ],
-          ))
+                child: FaIcon(
+                  FontAwesomeIcons.add,
+                  size: 60,
+                  color: Colors.white,
+                )),
+          ],
+        ))
       ],
     );
   }
@@ -299,21 +359,11 @@ class FondoHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-                 Colors.blue,Colors.indigo
-                 ]
-             ),
-        
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(100)
-          
-          )
-
-      ),
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.blue, Colors.indigo]),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(100))),
     );
   }
 }
