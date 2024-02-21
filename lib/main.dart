@@ -20,13 +20,91 @@ class MyApp extends StatelessWidget {
       ),
       home: const Scaffold(
         
-        body: MyHomePage()),
+        //body: MenuModerno()
+        body:MisSliver()
+        
+        ),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+
+//sliver personalizados
+//primero hay que poner customScrolView y dentro de el van los sliver
+// tanto los pre armados como los custom
+// sliver: SilverAppbar(el appbar pre armado como en el scaffold),
+//SliverPersistHeader(el custom appbar),SliverList(lista)
+
+class MisSliver extends StatelessWidget {
+  const MisSliver({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return   CustomScrollView(
+      slivers: [
+         // const SliverAppBar(
+         //   floating: true,//aparece el menu cuando empezamos a bajer la lista
+         //   backgroundColor: Colors.amber,
+         //   title: Text("Un Menu FEo pero facil"),
+         //   centerTitle: true,
+         // ),
+         SliverPersistentHeader(
+          delegate: VamoHacerUnaClase()
+
+          ),
+
+          SliverList(
+
+            delegate: SliverChildListDelegate(
+
+              List.generate(20, (index) => Container(
+                margin: EdgeInsets.all(15),
+                width: 200,
+                height: 100,
+                color: Colors.red,
+                ))
+            ),
+            )
+
+      ],
+    );
+  }
+}
+
+
+class VamoHacerUnaClase extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      width: 200,
+      height: 200,
+      color: Colors.red,
+    );
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+
+  @override  
+  double get maxExtent => throw UnimplementedError();
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => throw UnimplementedError();
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    // TODO: implement shouldRebuild
+    throw UnimplementedError();
+  }
+  
+}
+
+
+
+
+//-------------------------------------------------
+class MenuModerno extends StatelessWidget {
+  const MenuModerno({super.key});
 
   @override
   Widget build(BuildContext context) {
