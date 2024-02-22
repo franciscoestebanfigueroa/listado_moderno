@@ -49,10 +49,13 @@ class MisSliver extends StatelessWidget {
         SliverPersistentHeader(
             floating: true,
             delegate: VamosHacerUnaClase(
-                maximo: 150,
-                minimo: 100,
+                maximo: 200,
+                minimo: 150,
                 child: HeaderPaintCustom(
-                  child: Header(),
+                  child: Header(
+                    titulouno:"Consultorio",
+                    titulodos:"Control de Peso",
+                    icono:FontAwesomeIcons.nodeJs),
                 ))),
 
         SliverList(
@@ -151,7 +154,11 @@ class MenuModerno extends StatelessWidget {
       height: double.infinity,
       color: Colors.indigo,
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        const Expanded(flex: 2, child: Header()),
+         Expanded(flex: 2, child: Header(
+          icono: FontAwesomeIcons.add,
+          titulodos: "Consultorio",
+          titulouno: "Nutricionista",
+         )),
         Expanded(
             flex: 4,
             child: SingleChildScrollView(
@@ -290,22 +297,34 @@ class SuperBoton extends StatelessWidget {
 }
 
 class Header extends StatelessWidget {
-  const Header({super.key});
+  final String titulouno;
+  final String titulodos;
+  final IconData icono;
+   Header({
+    super.key, 
+    required this.titulouno, 
+    required this.titulodos, 
+    required this.icono,});
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
-      children: [FondoHeader(), FrenteHeader()],
+    return  Stack(
+      children: [const FondoHeader(), FrenteHeader(icono: icono,titulodos: titulodos,titulouno: titulouno,)],
     );
   }
 }
 
 class FrenteHeader extends StatelessWidget {
-  const FrenteHeader({super.key});
+  final String titulouno;
+  final String titulodos;
+  final IconData icono;
+  
+  const FrenteHeader({
+    super.key, required this.titulouno, required this.titulodos, required this.icono});
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
+    return  Stack(
       children: [
         Positioned(
             top: -45,
@@ -313,10 +332,10 @@ class FrenteHeader extends StatelessWidget {
             child: Opacity(
               opacity: 0.2,
               child: FaIcon(
-                FontAwesomeIcons.add,
+             icono,
                 size: 200,
                 color: Colors.white,
-                shadows: <Shadow>[
+                shadows: const <Shadow>[
                   Shadow(
                       color: Colors.white,
                       offset: Offset(-10.0, -10.0),
@@ -329,17 +348,17 @@ class FrenteHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              "Has Solicitado Asistecia",
-              style: TextStyle(fontSize: 20),
+              titulouno,
+              style: const TextStyle(fontSize: 20),
             ),
             Text(
-              "Medica",
-              style: TextStyle(fontSize: 30),
+              titulodos,
+              style: const TextStyle(fontSize: 30),
             ),
-            Opacity(
+             Opacity(
                 opacity: 0.5,
                 child: FaIcon(
-                  FontAwesomeIcons.add,
+                  icono,
                   size: 60,
                   color: Colors.white,
                 )),
